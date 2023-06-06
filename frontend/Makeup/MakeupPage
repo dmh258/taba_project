@@ -1,0 +1,40 @@
+import React, { useState } from 'react';
+import PartsTab from './PartsTab';
+
+
+const MakeupImage = () => {
+
+    const imageStyle = {
+        width: '50%',
+        height: '750px',
+        objectFit: 'fill',
+        backgroundColor: '#ffffff',
+        padding: '0px',
+        margin: '0px',
+    };
+        
+    return(
+        <div style={imageStyle}>
+            <img src='/image/1.png'></img>
+        </div>
+    );
+
+};
+
+
+const MakeupPage = () => {
+
+    const makeuppageStyle = {
+        display: 'flex',
+        margin: '0px 300px',
+    };
+
+    return(
+        <div style={makeuppageStyle}>
+            <MakeupImage />
+            <PartsTab />
+        </div>
+    );
+};
+
+export default MakeupPage;
