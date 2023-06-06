@@ -1,0 +1,107 @@
+import React, { useState, useEffect } from 'react';
+
+//??슬라이드 트랜지션 효과가 안됨
+
+const NotionImages = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // 슬라이드에 사용할 이미지 경로 배열
+  const slides = [
+    '/image/1.png',
+    '/image/2.png',
+    '/image/3.png',
+    '/image/4.png'
+  ];
+
+  // 슬라이드 전환 동작
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+
+  // style
+  const imageStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    transition: 'transform 0.3s ease-in-out',
+    transitionDuration: '0.5s',
+    padding: '20px 0px',
+  };
+  
+  const indexStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: `100%`,
+    padding: '20px 0px',
+  };
+  // width: ${470 * slides.length}px
+  const buttonStyle = {
+    display: 'flex',
+    width: '24px',
+    height: '24px',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    padding: '0px',
+    margin: '10px',
+  };
+
+  const circleButtonStyle = {
+    width: '14px',
+    height: '14px',
+    padding: '0px',
+    margin: '10px',
+    borderRadius: '50%',
+    backgroundColor: '#dbdbdb',
+    outline: 'none',
+    border: 'none',
+    cursor: 'pointer'
+  };
+
+  const activeCircleButtonStyle = {
+    ...circleButtonStyle,
+    backgroundColor: '#F5C359'
+  };
+
+  return (
+    <div>
+      <div className="slide" style={imageStyle}>
+        <img src={slides[currentSlide]} alt={`슬라이드 ${currentSlide + 1}`} style={{width: '470px', height: '470px'}} />
+      </div>
+      <div style={indexStyle}>
+        <button style={buttonStyle} onClick={prevSlide}>
+          <img src="/image/chevron-left-24.svg" alt="Previous" />
+        </button>
+        <div className="circlebuttons">
+          {slides.map((slide, index) => (
+            <button
+              key={index}
+              className="dot"
+              style={currentSlide === index ? activeCircleButtonStyle : circleButtonStyle}
+              onClick={() => goToSlide(index)}
+            ></button>
+          ))}
+        </div>
+        <button style={buttonStyle} onClick={nextSlide}>
+          <img src="/image/chevron-right-24.svg" alt="Previous" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default NotionImages;
+
+
+
