@@ -1,0 +1,17 @@
+import React, { useState, useEffect } from 'react';
+import NotionImages from './NotionImages';
+import UploadButton from './UploadButton';
+
+
+const UploadPage = () => {
+   
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', backgroundColor:'#F5815C'}}>
+        <NotionImages />
+        <UploadButton />
+        <img src='/image/decoBar.png' style={{ width: '100%', padding:'5px 0pxs'}} alt="deco" />
+      </div>
+    );
+};
+  
+export default UploadPage;
