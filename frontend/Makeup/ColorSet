@@ -1,0 +1,118 @@
+import React, { useState } from 'react';
+
+
+const CircleButton = ({ color, onClick, isActive }) => {
+
+  const buttonStyle = {
+    backgroundColor: color,
+    width: '38px',
+    height: '38px',
+    borderRadius: '50%',
+    margin: '10px',
+    cursor: 'pointer',
+    position: 'relative',
+    overflow: 'hidden',
+    border: 'none',
+    boxShadow: isActive ? 'inset 0 0 0 4px #ffffff' : 'none',
+  };
+    
+  const borderStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+    boxSizing: 'border-box',
+    border: isActive ? '2px solid #272727' : 'none',
+  };
+    
+  return (
+    <button style={buttonStyle} onClick={() => onClick(color)}>
+      <div style={borderStyle}></div>
+    </button>
+  );
+};
+
+const ColorSet = ({ colors }) => {
+    const [activeColor, setActiveColor] = useState(null);
+
+    //색상코드 전송
+    const handleClick = (color) => {
+      const data = { color: color };
+  
+      fetch('/api/sendColor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => response.json())
+        .then(result => {
+          // 서버 응답 처리
+          console.log('서버 응답:', result);
+        })
+        .catch(error => {
+          // 에러 처리
+          console.error('에러:', error);
+        });
+  
+      setActiveColor(color);
+    };
+    //리셋 신호 전송
+    const handleReset = () => {
+        const data = { color: 'origin' };
+  
+        fetch('/api/sendColor', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(result => {
+          // 서버 응답 처리
+          console.log('서버 응답:', result);
+        })
+        .catch(error => {
+          // 에러 처리
+          console.error('에러:', error);
+        });
+  
+      setActiveColor(null);
+    };
+
+  //style
+  const formStlye = {
+    display: 'flex',
+    justifyContent: 'flex-start', // Align elements horizontally to the left
+    height: '626px',
+    backgroundColor: '#ffffff',
+  };
+  
+ 
+  return (
+    <div style={formStlye}>
+      <div style={{alignItems: 'center'}}>
+      <button onClick={handleReset} style={{position: 'relative', background:'none', border:'none', cursor: 'pointer'}}><img src='/image/refresh-icon-28.svg' alt="Reset" /></button>
+      {colors.map((color, index) => (
+        <CircleButton
+          key={index}
+          color={color}
+          onClick={handleClick}
+          isActive={color === activeColor}
+          style={{margin:'0px', padding: '0px'}}
+        />
+      ))}
+    </div>
+    </div>
+  );
+
+};
+
+
+export default ColorSet;
+
