@@ -1,0 +1,40 @@
+import React from 'react';
+
+const BackBar = ({ pageName, onBackClick }) => {
+
+    const backbarStyle = {
+        margin:'0px',
+        padding: '0px 5px',
+        height: '40px',
+        borderTop: '1px solid #dbdbdb',
+        borderBottom: '1px solid #dbdbdb',
+        color: '#666666',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'flex-start',
+    };
+
+    const backButtonStyle = {
+        cursor: 'pointer',
+        width: '24px',
+        height: '24px',
+    };
+
+    const pageNameStyle = {
+        padding: '0px, 15px',
+        fontSize: '15px',
+    };
+
+  return (
+    <div style={backbarStyle}>
+        <div style={{padding: '0px 304px', margin: '0px', width: '100%'}}>
+            <div onClick={onBackClick} style={backButtonStyle}> 
+            <img src="/image/back-icon.svg" alt="Back" /> </div>
+            <div> <span style={pageNameStyle}>{pageName}</span> </div>
+        </div>
+    </div>
+  );
+};
+
+export default BackBar;
