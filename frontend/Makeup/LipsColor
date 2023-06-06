@@ -1,0 +1,99 @@
+import React, { useState } from 'react';
+import ColorSet from './ColorSet';
+
+//퍼스널컬러 필터
+const ColorTab = ({ activeTab, setActiveTab , tabContent }) => {
+
+  const formStyle = {
+    display: 'flex',
+    alignItems: 'center', // 가운데 정렬
+    borderBottom: '1px solid #dbdbdb',
+    height: '60px',
+    width: '100%',
+    backgroundColor: '#ffffff',
+  };
+
+  const buttonStyle = {
+    margin: '15px 8px',
+    padding: '7px 13px',
+    border: 'none',
+    backgroundColor: '#ffffff',
+    cursor: 'pointer',
+    fontSize: '14px',
+    border: '1px solid #666666',
+    borderRadius: '50px',
+  };
+
+  const activeButtonStyle = {
+      ...buttonStyle,
+      border: '1px solid #D01C59',
+      color: '#D01C59',
+  };
+
+
+  return (
+    <div>
+      <div style={formStyle}>
+        <button
+          style={activeTab === 'spring' ? activeButtonStyle : buttonStyle} onClick={() => setActiveTab('spring')}>
+          봄 웜톤
+        </button>
+        <button
+          style={activeTab === 'summer' ? activeButtonStyle : buttonStyle} onClick={() => setActiveTab('summer')}>
+          여름 쿨톤
+        </button>
+        <button
+          style={activeTab === 'autumn' ? activeButtonStyle : buttonStyle} onClick={() => setActiveTab('autumn')}>
+          가을 웜톤
+        </button>
+        <button
+          style={activeTab === 'winter' ? activeButtonStyle : buttonStyle} onClick={() => setActiveTab('winter')}>
+          겨울 쿨톤
+        </button>
+      </div>
+      <div>{tabContent}</div>
+    </div>
+  );
+};
+
+//퍼스널컬러별 색상팔레트
+const SpringColor = () => {
+    const colors = ['#fa27a9', '#e4f123', '#4bf899', '#0000ff', '#f14ce4', '#ff9900', '#0000ff'];
+  
+    return <ColorSet colors={colors} />;
+  };
+const SummerColor = () => {
+    const colors = ['#7c1a1a', '#135e13', '#0c0c5e'];
+  
+    return <ColorSet colors={colors} />;
+  };
+const AutumnColor = () => {
+  const colors = ['#67a162', '#5597c4', '#c42d9e'];
+
+  return <ColorSet colors={colors} />;
+};
+const WinterColor = () => {
+    const colors = ['#e0e259', '#95f195', '#a80c81'];
+  
+    return <ColorSet colors={colors} />;
+  };
+
+
+const LipsColor = () => {
+  const [activeTab, setActiveTab] = useState('spring');
+  let tabContent = null;
+
+  if (activeTab === 'spring') {
+    tabContent = <SpringColor />;
+  } else if (activeTab === 'summer') {
+    tabContent = <SummerColor />;
+  } else if (activeTab === 'autumn') {
+    tabContent = <AutumnColor />;
+  } else if (activeTab === 'winter') {
+    tabContent = <WinterColor />;
+  }
+
+  return <ColorTab activeTab={activeTab} setActiveTab={setActiveTab} tabContent={tabContent} />;
+};
+
+export default LipsColor;
