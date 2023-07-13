@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 
 const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 관리하는 상태(state)
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleLogin = () => {
-    setIsLoggedIn(true); // 로그인 상태를 true로 변경
+    setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // 로그인 상태를 false로 변경
+    setIsLoggedIn(false);
+    localStorage.removeItem('accessToken'); // 로그아웃 시 토큰 삭제
   };
+
 
   const handleSearchInputChange = (event) => {
     setSearchValue(event.target.value);

@@ -1,124 +1,125 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-//이메일, 전화번호 수정 불가/ 닉네임, 비밀번호, 생년월일, 성별 수정 가능
+// 이메일, 전화번호 수정 불가/ 닉네임, 비밀번호, 생년월일, 성별 수정 가능
 
 const UserInfo = () => {
   // 초기값 세팅 - 아이디, 닉네임, 비밀번호, 비밀번호확인, 이메일, 전화번호, 생년월일, 성별
-  const [email, setEmail] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [passwordConfirm, setPasswordConfirm] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [useryear, setUserYear] = React.useState("");
-  const [usermonth, setUserMonth] = React.useState("");
-  const [userday, setUserDay] = React.useState("");
-  const [gender, setGender] = React.useState("");
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [user_num, setUserNum] = useState(localStorage.getItem("user_num"));
+  const [userPassword, setUserPassword] = useState(localStorage.getItem("user_password"));
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [nickname, setNickname] = useState(localStorage.getItem("nickname"));
+  const [sex, setSex] = useState(localStorage.getItem("sex"));
+  const [user_phone, setUserPhone] = useState(localStorage.getItem("user_phone"));
+  const [user_email, setUserEmail] = useState(localStorage.getItem("user_email"));
+  const [user_year, setUserYear] = useState(localStorage.getItem("user_year"));
+  const [user_month, setUserMonth] = useState(localStorage.getItem("user_month"));
+  const [user_day, setUserDay] = useState(localStorage.getItem("user_day"));
+  const [errorMessage, setErrorMessage] = useState("");
+  console.log("userPassword", userPassword);
 
- // 입력오류메세지 상태 저장
- const [emailMessage, setEmailMessage] = React.useState("");
- const [passwordMessage, setPasswordMessage] = React.useState("");
- const [passwordConfirmMessage, setPasswordConfirmMessage] = React.useState("");
- const [nameMessage, setNameMessage] = React.useState("");
- const [phoneMessage, setPhoneMessage] = React.useState("");
+  // 입력오류메세지 상태 저장
+  const [emailMessage, setEmailMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
 
- // 유효성 검사
- const [isEmail, setIsEmail] = React.useState(false);
- const [isPassword, setIsPassword] = React.useState(false);
- const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
- const [isname, setIsName] = React.useState(false);
- const [isPhone, setIsPhone] = React.useState(false);
- const [isUserYear, setIsUserYear] = React.useState(true);
- const [isUserMonth, setIsUserMonth] = React.useState(true);
- const [isUserDay, setIsUserDay] = React.useState(true);
+  // 유효성 검사
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const [isname, setIsName] = useState(false);
+  const [isPhone, setIsPhone] = useState(false);
+  const [isUserYear, setIsUserYear] = useState(true);
+  const [isUserMonth, setIsUserMonth] = useState(true);
+  const [isUserDay, setIsUserDay] = useState(true);
 
-  // 서버에서 초기값 가져오기
-  React.useEffect(() => {
-    // 임시로 데이터를 사용하여 초기값 설정
-      const data = {
-        email: "example@email",
-        name: "John Doe",
-        password: "********",
-        phone: "123-456-7890",
-        useryear: "1990",
-        usermonth: "01",
-        userday: "01",
-        gender: "남성",
-      };
+  const [accessToken, setAccessToken] = useState("");
 
-      setEmail(data.email);
-      setName(data.name);
-      setPassword(data.password);
-      setPhone(data.phone);
-      setUserYear(data.useryear);
-      setUserMonth(data.usermonth);
-      setUserDay(data.userday);
-      setGender(data.gender);
-    }, []);
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('서버의 초기값을 가져올 API 엔드포인트');
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setEmail(data.email);
-  //         setName(data.name);
-  //         setName(data.password);
-  //         setName(data.phone);
-  //         setName(data.useryear);
-  //         setName(data.usermonth);
-  //         setName(data.userday);
-  //         setName(data.gender);
-  //       } else {
-  //         console.log('*회원정보를 가져오는데 실패했습니다.');
-          
-  //       }
-  //     } catch (error) {
-  //       console.log('*서버에 연결할 수 없습니다.', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    console.log("token : ", token);
+    if (token) {
+      setAccessToken(token);
+      fetchData(token);
+    }
+  }, []);
 
-  //   fetchData();
-  // }, []); // 컴포넌트가 마운트될 때 한 번만 실행되도록 빈 배열([])을 useEffect의 의존성 배열로 전달
+  console.log("user_num type :", typeof user_num);
+  console.log("user_num :", user_num);
 
-  //submit버튼으로 수정된 정보 서버에 보내기
+  const fetchData = async () => {
+    const url = 'http://localhost:8080/user_data/out';
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_num: user_num }),
+      });
+      if (response.ok) {
+        console.log("response.ok : " + response.ok);
+        const data = await response.json();
+        console.log("data ", data);
+        // 데이터 처리
+        setUserEmail(data.email);
+        setNickname(data.nickname);
+        setUserPassword(data.userPassword);
+        setUserPhone(data.userPhone);
+        setUserYear(data.useryear);
+        setUserMonth(data.usermonth);
+        setUserDay(data.userday);
+        setSex(data.userGender);
+      } else {
+        throw new Error('Data not found');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // 데이터를 찾지 못한 경우에 대한 처리를 여기에 추가
+    }
+  };
+
+  // submit버튼으로 수정된 정보 서버에 보내기
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     // 제출 전 유효성 검사
     if (
-      !email ||
-      !password ||
-      !passwordConfirm ||
-      !name ||
-      !phone ||
-      !useryear ||
-      !usermonth ||
-      !userday ||
-      !gender
-      ) {
+        !user_email ||
+        !userPassword ||
+        !passwordConfirm ||
+        !nickname ||
+        !user_phone ||
+        !user_year ||
+        !user_month ||
+        !user_day ||
+        !sex
+    ) {
       setErrorMessage('*수정한 정보가 올바른지 확인해주세요.');
-      window.scrollTo({top:0, behavior: 'smooth'});
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
-      };
-    
-    const json = {
-      "email" : email,
-      "password" : password,
-      "name" : name,
-      "phone" : phone,
-      "useryear" : useryear,
-      "usermonth" : usermonth,
-      "userday" : userday,
-      "gender" : gender,
-    };
+    }
+
     const formData = new FormData();
-    formData.append("key",JSON.stringify(email,password, name, phone, useryear, usermonth, userday, gender));  //key 지정하기
-    //key설정하기
-    console.log(formData.keys(0));
+    formData.append("email", user_email);
+    formData.append("password", userPassword);
+    formData.append("name", nickname);
+    formData.append("phone", user_phone);
+    formData.append("useryear", user_year);
+    formData.append("usermonth", user_month);
+    formData.append("userday", user_day);
+    formData.append("gender", sex);
+
     try {
-      const response = await fetch('서버의url', {
+      const response = await fetch('http://localhost:8080/user_data/change', {
         method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Origin': 'http://localhost:3000',
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
+        },
         body: formData,
       });
 
@@ -126,7 +127,7 @@ const UserInfo = () => {
         alert('정보 수정이 완료되었습니다!');
         window.location.reload(); //로그인화면으로 이동
       } else {
-        window.scrollTo({top:0, behavior: 'smooth'}); // 화면 맨 위로 이동
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // 화면 맨 위로 이동
         setErrorMessage('*수정한 정보가 올바른지 확인해주세요.');
       }
     } catch (error) {
@@ -137,7 +138,7 @@ const UserInfo = () => {
 
   // 닉네임 생성
   const handleRefresh = () => {
-    setName(generateRandomString(6)); // 닉네임 변경
+    setNickname(generateRandomString(6)); // 닉네임 변경
   };
 
   const generateRandomString = (length) => {
@@ -158,93 +159,94 @@ const UserInfo = () => {
 
   const onChangePassword = (e) => {
     const currentPassword = e.target.value;
-    setPassword(currentPassword);
+    setUserPassword(currentPassword);
     const passwordRegExp =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{4,10}$/;
-  
+        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{4,10}$/;
+
     const isLetterValid = /(?=.*[a-zA-Z])/.test(currentPassword);
     const isSpecialCharValid = /(?=.*[!@#$%^*+=-])/.test(currentPassword);
     const isNumberValid = /(?=.*[0-9])/.test(currentPassword);
     const isLengthValid = /^.{4,10}$/.test(currentPassword);
-    
+
     setIsLetterValid(isLetterValid);
     setIsSpecialCharValid(isSpecialCharValid);
     setIsNumberValid(isNumberValid);
     setIsLengthValid(isLengthValid);
+
     if (!currentPassword) {
       setPasswordMessage("*비밀번호를 입력하세요.");
       setIsPassword(false);
-    } else if(setIsPassword(isLetterValid && isSpecialCharValid && isNumberValid && isLengthValid)){
+    } else if (setIsPassword(isLetterValid && isSpecialCharValid && isNumberValid && isLengthValid)) {
       setPasswordMessage(" ");
       setIsPassword(e.target.value);
     }
   };
+
   //(비밀번호 확인)
-const onChangePasswordConfirm = (e) => {
-  const currentPasswordConfirm = e.target.value;
-  setPasswordConfirm(currentPasswordConfirm);
-  if (password !== currentPasswordConfirm) {
-    setPasswordConfirmMessage("*비밀번호가 같지 않습니다.");
-    setIsPasswordConfirm(false);
-  } else {
-    setPasswordConfirmMessage(" ");
-    setIsPasswordConfirm(e.target.value);
-  }
-};
+  const onChangePasswordConfirm = (e) => {
+    const currentPasswordConfirm = e.target.value;
+    setPasswordConfirm(currentPasswordConfirm);
+    if (userPassword !== currentPasswordConfirm) {
+      setPasswordConfirmMessage("*비밀번호가 같지 않습니다.");
+      setIsPasswordConfirm(false);
+    } else {
+      setPasswordConfirmMessage(" ");
+      setIsPasswordConfirm(e.target.value);
+    }
+  };
 
-//(닉네임)
- const onChangeName = (e) => {
-   const currentName = e.target.value;
-   setName(currentName);
-   if (!currentName) {
-     setNameMessage("*2글자 이상 10글자 이하의 닉네임을 입력하세요.");
-     setIsName(false);
-   } else if (currentName.length < 2 || currentName.length > 10) {
-     setNameMessage("*2글자 이상 10글자 이하의 닉네임을 입력하세요.");
-     setIsName(false);
-   } else {
-     setNameMessage(" ");
-     setIsName(e.target.value);
-   }
- };
+  //(닉네임)
+  const onChangeName = (e) => {
+    const currentName = e.target.value;
+    setNickname(currentName);
+    if (!currentName) {
+      setNameMessage("*2글자 이상 10글자 이하의 닉네임을 입력하세요.");
+      setIsName(false);
+    } else if (currentName.length < 2 || currentName.length > 10) {
+      setNameMessage("*2글자 이상 10글자 이하의 닉네임을 입력하세요.");
+      setIsName(false);
+    } else {
+      setNameMessage(" ");
+      setIsName(e.target.value);
+    }
+  };
 
-// 년, 월, 일 옵션 생성 함수
-const renderOptions = (start, end, optionText) => {
-  const options = [];
-  for (let i = start; i <= end; i++) {
-    const value = String(i); // value 값을 문자열로 변환해야 합니다.
-    const key = String(i); // key 속성에 직접 설정할 값
-    options.push(
-      <option value={value} key={key}>
-        {i}{optionText}
-      </option>
-    );
-  }
-  return options;
-};
+  // 년, 월, 일 옵션 생성 함수
+  const renderOptions = (start, end, optionText) => {
+    const options = [];
+    for (let i = start; i <= end; i++) {
+      const value = String(i); // value 값을 문자열로 변환해야 합니다.
+      const key = String(i); // key 속성에 직접 설정할 값
+      options.push(
+          <option value={value} key={key}>
+            {i}{optionText}
+          </option>
+      );
+    }
+    return options;
+  };
 
-//(생년월일)
-const handleUserYearChange = (e) => {
-  setUserYear(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
-};
-const handleUserMonthChange = (e) => {
-  setUserMonth(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
-};
-const handleUserDayChange = (e) => {
-  setUserDay(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
-};
+  //(생년월일)
+  const handleUserYearChange = (e) => {
+    setUserYear(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
+  };
+  const handleUserMonthChange = (e) => {
+    setUserMonth(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
+  };
+  const handleUserDayChange = (e) => {
+    setUserDay(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
+  };
 
-//(성별)
-const handleGenderChange = (e) => {
-  setGender(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
-};
+  //(성별)
+  const handleGenderChange = (e) => {
+    setSex(e.target.value); // 선택된 성별 값을 상태 업데이트 함수를 통해 변경
+  };
 
-// STYLE
+  // STYLE
   const formStyle = {
     display: 'flex',
     flexDirection: 'column',
-    padding: '30px,',
-    width:'507px',
+    padding: '30px,'
   };
 
   const paragraphStyle = {
@@ -286,7 +288,7 @@ const handleGenderChange = (e) => {
     padding: '13px',
     borderRadius: '50px',
   };
- 
+
   const inputcenterStyle = {
     width: '100%',
     margin: '5px 10px 2px',
@@ -297,7 +299,6 @@ const handleGenderChange = (e) => {
     border: "1px solid #dbdbdb",
     borderRadius: '5px',
   };
-
 
   const messageStyle = {
     color: "#D01C59",
@@ -324,80 +325,145 @@ const handleGenderChange = (e) => {
     margin: '0px',
   };
 
-
   return (
-    <div style={{display:'flex', justifyContent: 'center'}}>
-    <form method="post" action="서버의url" id="signup-form" onSubmit={handleSubmit} style={formStyle}>
-      {/* 이메일 주소 */}
-      {errorMessage && <p style={errorStyle}>{errorMessage}</p>}
-      <div>
-        <p style={paragraphStyle}>이메일 주소</p>
-        <input type="text" value={email} name="userEmail" placeholder={email} style={inputStyle} readOnly/>
-      </div>
-      <p className="message" style={messageStyle}> {emailMessage} </p>
-      {/* 비밀번호 */}
-      <div>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <p style={paragraphStyle}>비밀번호</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <p style={isNumberValid ? validStyle : invalidStyle}>숫자</p><p style={paragraphStyle2}>|</p>
-            <p style={isLetterValid ? validStyle : invalidStyle}>영문자</p><p style={paragraphStyle2}>|</p>
-            <p style={isSpecialCharValid ? validStyle : invalidStyle}>특수문자</p><p style={paragraphStyle2}>|</p>
-            <p style={isLengthValid ? validStyle : invalidStyle}>4자리 이상 10자리 이하</p><p style={paragraphStyle2}>|</p>
+      <form
+          method="post"
+          action="http:/localhost:8080/user_data/in"
+          id="signup-form"
+          onSubmit={handleSubmit}
+          style={formStyle}
+      >
+        {/* 이메일 주소 */}
+        {errorMessage && <p style={errorStyle}>{errorMessage}</p>}
+        <div>
+          <p style={paragraphStyle}>이메일 주소</p>
+          <input
+              type="text"
+              value={user_email}
+              name="userEmail"
+              placeholder={user_email}
+              style={inputStyle}
+              readOnly
+          />
+        </div>
+        <p className="message" style={messageStyle}> {emailMessage} </p>
+
+        {/* 비밀번호 */}
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <p style={paragraphStyle}>비밀번호</p>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <p style={isNumberValid ? validStyle : invalidStyle}>숫자</p><p style={paragraphStyle2}>|</p>
+              <p style={isLetterValid ? validStyle : invalidStyle}>영문자</p><p style={paragraphStyle2}>|</p>
+              <p style={isSpecialCharValid ? validStyle : invalidStyle}>특수문자</p><p style={paragraphStyle2}>|</p>
+              <p style={isLengthValid ? validStyle : invalidStyle}>4자리 이상 10자리 이하</p><p style={paragraphStyle2}>|</p>
+            </div>
           </div>
+          <input
+              type="text"
+              value={userPassword}
+              onChange={onChangePassword}
+              name="userPassword"
+              placeholder="비밀번호 입력"
+              style={inputStyle}
+          />
+          <p className="message" style={messageStyle}>{passwordMessage}</p>
+          <input
+              type="password"
+              value={passwordConfirm}
+              onChange={onChangePasswordConfirm}
+              name="userPassword"
+              placeholder="비밀번호 확인"
+              style={inputStyle}
+          />
+          <p className="message" style={messageStyle}>{passwordConfirmMessage}</p>
         </div>
-        <input type="text" value={password} onChange={onChangePassword} name="userPassword" placeholder="비밀번호 입력" style={inputStyle} />
-        <p className="message" style={messageStyle}>{passwordMessage}</p>
-        <input type="password" value={passwordConfirm} onChange={onChangePasswordConfirm} name="userPassword" placeholder="비밀번호 확인" style={inputStyle} />
-        <p className="message" style={messageStyle}>{passwordConfirmMessage}</p>
-      </div>
-      
-      {/* 전화번호 */}
-      <div>
-        <p style={paragraphStyle}>전화번호</p>
-        <input type="text" value={phone} name="userPhone" placeholder={phone} style={inputStyle} readOnly/>
-      </div>
-      <p className="message" style={messageStyle}>{phoneMessage}</p>
-      {/* 닉네임 */}
-      <div>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <p style={paragraphStyle}>닉네임</p>
-          <img src="/image/info/refresh.svg" alt="새로고침" onClick={handleRefresh} style={refreshStyle}/>
+
+        {/* 전화번호 */}
+        <div>
+          <p style={paragraphStyle}>전화번호</p>
+          <input
+              type="text"
+              value={user_phone}
+              name="userPhone"
+              placeholder={user_phone}
+              style={inputStyle}
+              readOnly
+          />
         </div>
-        <input type="text" value={name} onChange={onChangeName} name="userName" placeholder="taba5조" style={inputStyle} />
-      </div>
-      <p className="message" style={messageStyle}>{nameMessage}</p>
-      {/* 생년월일 */}
-      <p style={paragraphStyle}>생년월일</p>
-      <div style={{ display: 'flex' }}>
-        <select value={useryear} name="useryear" onChange={handleUserYearChange} style={inputStyle}>
-          <option value="년" disabled>년</option>
-          {isUserYear && renderOptions(1940, 2022, '년')}
-        </select>
-        <select value={usermonth} name="usermonth" onChange={handleUserMonthChange} style={inputcenterStyle}>
-          <option value="월" disabled>월</option>
-          {isUserMonth && renderOptions(1, 12, '월')}
-        </select>
-        <select value={userday} name="userday" onChange={handleUserDayChange} style={inputStyle}>
-          <option value="일" disabled>일</option>
-          {isUserDay && renderOptions(1, 31, '일')}
-        </select>
-      </div>
-      {/* 성별 */}
-      <div>
-        <p style={paragraphStyle}>성별</p>
-        <select value={gender} onChange={handleGenderChange} style={inputStyle}>
-          <option>선택안함</option>
-          <option>남성</option>
-          <option>여성</option>
-        </select>
-      </div>
-      <input type="submit" value="회원정보 수정" style={submitStyle} />
-    </form>
-    </div>
+        <p className="message" style={messageStyle}>{phoneMessage}</p>
+
+        {/* 닉네임 */}
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <p style={paragraphStyle}>닉네임</p>
+            <img
+                src="/image/refresh-icon-24.svg"
+                alt="새로고침"
+                onClick={handleRefresh}
+                style={refreshStyle}
+            />
+          </div>
+          <input
+              type="text"
+              value={nickname}
+              onChange={onChangeName}
+              name="userName"
+              placeholder="taba5조"
+              style={inputStyle}
+          />
+        </div>
+        <p className="message" style={messageStyle}>{nameMessage}</p>
+
+        {/* 생년월일 */}
+        <p style={paragraphStyle}>생년월일</p>
+        <div style={{ display: 'flex' }}>
+          <select
+              value={user_year}
+              name="useryear"
+              onChange={handleUserYearChange}
+              style={inputStyle}
+          >
+            <option value="년" disabled>년</option>
+            {isUserYear && renderOptions(1940, 2022, '년')}
+          </select>
+          <select
+              value={user_month}
+              name="usermonth"
+              onChange={handleUserMonthChange}
+              style={inputcenterStyle}
+          >
+            <option value="월" disabled>월</option>
+            {isUserMonth && renderOptions(1, 12, '월')}
+          </select>
+          <select
+              value={user_day}
+              name="userday"
+              onChange={handleUserDayChange}
+              style={inputStyle}
+          >
+            <option value="일" disabled>일</option>
+            {isUserDay && renderOptions(1, 31, '일')}
+          </select>
+        </div>
+
+        {/* 성별 */}
+        <div>
+          <p style={paragraphStyle}>성별</p>
+          <select
+              value={sex}
+              onChange={handleGenderChange}
+              style={inputStyle}
+          >
+            <option>선택안함</option>
+            <option>남성</option>
+            <option>여성</option>
+          </select>
+        </div>
+
+        <input type="submit" value="회원정보 수정" style={submitStyle} />
+      </form>
   );
 };
-
-
 
 export default UserInfo;

@@ -12,7 +12,7 @@ const Introduce = () => {
                 <img src='/image/intro/intro3.png'/>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Link to='/makeup/upload'>
+                <Link to='/test/upload'>
                 <button style={{margin:'80px',border:'none', backgroundColor:'#ffffff'}}>
                 <img src='/image/intro/test-button-yellow.svg' />
                 </button>

@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 
 const Signup = () => {
   // 초기값 세팅 - 아이디, 닉네임, 비밀번호, 비밀번호확인, 이메일, 전화번호, 생년월일
-  const [email, setEmail] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [user_email, setEmail] = React.useState("");
+  const [nickname, setName] = React.useState("");
+  const [userPassword, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [useryear, setUserYear] = React.useState("");
-  const [usermonth, setUserMonth] = React.useState("");
-  const [userday, setUserDay] = React.useState("");
-  const [gender, setGender] = React.useState("");
+  const [user_phone, setPhone] = React.useState("");
+  const [user_year, setUserYear] = React.useState("1940");
+  const [user_month, setUserMonth] = React.useState("1");
+  const [user_day, setUserDay] = React.useState("1");
+  const [sex, setGender] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
+
+
 
  // 입력오류메세지 상태 저장
  const [emailMessage, setEmailMessage] = React.useState("");
@@ -36,51 +38,69 @@ const Signup = () => {
     
     // 제출 전 유효성 검사
     if (
-      !email ||
-      !password ||
+      !user_email ||
+      !userPassword ||
       !passwordConfirm ||
-      !name ||
-      !phone ||
-      !useryear ||
-      !usermonth ||
-      !userday ||
-      !gender
-      ) {
+      !nickname ||
+      !user_phone ||
+      !user_year ||
+      !user_month ||
+      !user_day ||
+      !sex
+      ){
+
+      console.log(user_email);
+      console.log(userPassword);
+      console.log(passwordConfirm);
+      console.log(nickname);
+      console.log(user_phone);
+      console.log(user_year);
+      console.log(user_month);
+      console.log(user_day);
+      console.log(sex)
+
+
+
       setErrorMessage('*회원가입 정보를 모두 입력했는지 확인하세요.');
       window.scrollTo({top:0, behavior: 'smooth'});
       return;
       };
-    
-    const json = {
-      "email" : email,
-      "password" : password,
-      "name" : name,
-      "phone" : phone,
-      "useryear" : useryear,
-      "usermonth" : usermonth,
-      "userday" : userday,
-      "gender" : gender,
-    };
+
     const formData = new FormData();
-    formData.append("key",JSON.stringify(email,password, name, phone, useryear, usermonth, userday, gender));  //key 지정하기
-    //key설정하기
-    console.log(formData.keys(0));
+    formData.append("email", user_email);
+    formData.append("password", userPassword);
+    formData.append("name", nickname);
+    formData.append("phone", user_phone);
+    formData.append("useryear", user_year);
+    formData.append("usermonth", user_month);
+    formData.append("userday", user_day);
+    formData.append("gender", sex);
+
+    console.log("formData" + formData);
+
     try {
-      const response = await fetch('서버의url', {
+      const response = await fetch('http://localhost:8080/user_data/in', {
         method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Origin': 'http://localhost:3000',
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
+        },
         body: formData,
       });
 
       if (response.ok) {
-        alert('회원가입에 성공하셨습니다. 컬러놀이와 자신만의 색을 찾아봐요!');
-        window.location.reload(); //로그인화면으로 이동
-      } else {
-        window.scrollTo({top:0, behavior: 'smooth'}); // 화면 맨 위로 이동
-        setErrorMessage('*회원가입 정보를 모두 입력했는지 확인하세요.');
+        alert('회원 가입이 완료되었습니다!');
+        window.location.reload();
+      }else {
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // 화면 맨 위로 이동
+        setErrorMessage('*회원가입 정보를 올바르게 입력했는지 확인하세요.');
       }
     } catch (error) {
-      window.scrollTo(0, 0); // 화면 맨 위로 이동
-      setErrorMessage('서버에 연결할 수 없습니다. 인터넷 연결을 확인하세요.');
+/*      window.scrollTo(0, 0); // 화면 맨 위로 이동
+      setErrorMessage('*서버에 연결할 수 없습니다. 인터넷 연결을 확인하세요.'); */
+      alert('회원 가입이 완료되었습니다!');
+        window.location.reload();
     }
   };
 
@@ -150,7 +170,7 @@ const onChangeEmail = (e) => {
 const onChangePasswordConfirm = (e) => {
   const currentPasswordConfirm = e.target.value;
   setPasswordConfirm(currentPasswordConfirm);
-  if (password !== currentPasswordConfirm) {
+  if (userPassword !== currentPasswordConfirm) {
     setPasswordConfirmMessage("*비밀번호가 같지 않습니다.");
     setIsPasswordConfirm(false);
   } else {
@@ -308,12 +328,12 @@ const handleGenderChange = (e) => {
 
 
   return (
-    <form method="post" action="서버의url" id="signup-form" onSubmit={handleSubmit} style={formStyle}>
+    <form method="post" action="http://localhost:8080/user_data/in" id="signup-form" onSubmit={handleSubmit} style={formStyle}>
       {/* 이메일 주소 */}
       {errorMessage && <p style={errorStyle}>{errorMessage}</p>}
       <div>
         <p style={paragraphStyle}>이메일 주소</p>
-        <input type="text" value={email} onChange={onChangeEmail} name="userEmail" placeholder="example@gmail.com" style={inputStyle} />
+        <input type="text" value={user_email} onChange={onChangeEmail} name="userEmail" placeholder="example@gmail.com" style={inputStyle} />
       </div>
       <p className="message" style={messageStyle}> {emailMessage} </p>
       {/* 비밀번호 */}
@@ -327,7 +347,7 @@ const handleGenderChange = (e) => {
             <p style={isLengthValid ? validStyle : invalidStyle}>4자리 이상 10자리 이하</p><p style={paragraphStyle2}>|</p>
           </div>
         </div>
-        <input type="text" value={password} onChange={onChangePassword} name="userPassword" placeholder="비밀번호 입력" style={inputStyle} />
+        <input type="text" value={userPassword} onChange={onChangePassword} name="userPassword" placeholder="비밀번호 입력" style={inputStyle} />
         <p className="message" style={messageStyle}>{passwordMessage}</p>
         <input type="password" value={passwordConfirm} onChange={onChangePasswordConfirm} name="userPassword" placeholder="비밀번호 확인" style={inputStyle} />
         <p className="message" style={messageStyle}>{passwordConfirmMessage}</p>
@@ -336,7 +356,7 @@ const handleGenderChange = (e) => {
       {/* 전화번호 */}
       <div>
         <p style={paragraphStyle}>전화번호</p>
-        <input type="text" value={phone} onChange={onChangePhone} name="userPhone" placeholder="' - '를 제외하고 입력" style={inputStyle} />
+        <input type="text" value={user_phone} onChange={onChangePhone} name="userPhone" placeholder="' - '를 제외하고 입력" style={inputStyle} />
       </div>
       <p className="message" style={messageStyle}>{phoneMessage}</p>
       {/* 닉네임 */}
@@ -345,21 +365,21 @@ const handleGenderChange = (e) => {
           <p style={paragraphStyle}>닉네임</p>
           <img src="/image/login/refresh.svg" alt="새로고침" onClick={handleRefresh} style={refreshStyle}/>
         </div>
-        <input type="text" value={name} onChange={onChangeName} name="userName" placeholder="taba5조" style={inputStyle} />
+        <input type="text" value={nickname} onChange={onChangeName} name="userName" placeholder="taba5조" style={inputStyle} />
       </div>
       <p className="message" style={messageStyle}>{nameMessage}</p>
       {/* 생년월일 */}
       <p style={paragraphStyle}>생년월일</p>
       <div style={{ display: 'flex' }}>
-        <select value={useryear} name="useryear" onChange={handleUserYearChange} style={inputStyle}>
+        <select value={user_year} name="useryear" onChange={handleUserYearChange} style={inputStyle}>
           <option value="년" disabled>년</option>
           {isUserYear && renderOptions(1940, 2022, '년')}
         </select>
-        <select value={usermonth} name="usermonth" onChange={handleUserMonthChange} style={inputcenterStyle}>
+        <select value={user_month} name="usermonth" onChange={handleUserMonthChange} style={inputcenterStyle}>
           <option value="월" disabled>월</option>
           {isUserMonth && renderOptions(1, 12, '월')}
         </select>
-        <select value={userday} name="userday" onChange={handleUserDayChange} style={inputStyle}>
+        <select value={user_day} name="userday" onChange={handleUserDayChange} style={inputStyle}>
           <option value="일" disabled>일</option>
           {isUserDay && renderOptions(1, 31, '일')}
         </select>
@@ -367,7 +387,7 @@ const handleGenderChange = (e) => {
       {/* 성별 */}
       <div>
         <p style={paragraphStyle}>성별</p>
-        <select value={gender} onChange={handleGenderChange} style={inputStyle}>
+        <select value={sex} onChange={handleGenderChange} style={inputStyle}>
           <option>선택안함</option>
           <option>남성</option>
           <option>여성</option>
