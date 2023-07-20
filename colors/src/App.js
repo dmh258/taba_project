@@ -37,6 +37,8 @@ const backgroundStyle = {
   letterSpacing: '0.3%',
   margin: '0px',
   padding: '0px',
+  width:'100%',
+  height: '100%',
 };
 
 const App = () => {
