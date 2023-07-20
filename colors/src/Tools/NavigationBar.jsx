@@ -43,17 +43,27 @@ const NavigationBar = () => {
     display: 'flex',
     flexWrap: 'nowrap',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '0px 300px',
+    justifyContent: 'center',
+    padding: '0px',
     margin: '0px',
     fontFamily: 'Noto Sans KR, sans-serif',
-    position: 'relative',
+    // position: 'relative',
     height: '90px',
+    minWidth: '1220px',
     overflow: 'hidden',
+  };
+
+  const menuStyle = {
+    width:'500px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textDecoration: 'none',
   };
 
   const linkStyle = {
     fontSize: '15px',
+    letterSpacing: '0.5%',
     margin: '10px',
     color: '#272727',
     textDecoration: 'none',
@@ -62,20 +72,11 @@ const NavigationBar = () => {
   const logoStyle = {
     width: '220px',
     // height: '40px',
-    // position: 'absolute',
-    // top: '50%',
-    // left: '50%',
-    // transform: 'translate(-50%, -50%)',
-  };
-  
-  const menuStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none',
+    objectFit:'contain',
   };
 
   const inputStyle = {
-    width: '240px',
+    width: '180px',
     height: '44px',
     fontSize: '16px',
     padding: '0 20px',
