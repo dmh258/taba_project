@@ -25,7 +25,7 @@ const ScrollToTopButton = () => {
   const buttonStyle = {
     position: 'fixed',
     bottom: '80px',
-    right: '220px',
+    right: '100px',
     display: isVisible ? 'block' : 'none',
     zIndex: '999',
     backgroundColor: 'transparent',

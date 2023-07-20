@@ -11,6 +11,7 @@ const backgroundStyle = {
     letterSpacing: '0.5%',
     padding: '0px',
     margin: '0px',
+    minwidth: '1280px',
   };
 
 

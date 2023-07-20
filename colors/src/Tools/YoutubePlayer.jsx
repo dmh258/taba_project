@@ -26,20 +26,22 @@ const YoutubePlayer = ({ videoId, title, channel }) => {
 
   const channelStyle = {
     fontSize: '14px',
+    letterSpacing: '0.5%',
     color: '#666666',
     margin: '3px 0',
     flexWrap: 'wrap',
   };
 
   const titleStyle = {
-    fontSize: '15px',
+    fontSize: '14px',
+    letterSpacing: '0.5%',
     margin: '0',
     width: '360px',
     flexWrap: 'wrap',
   };
 
   return (
-    <div>
+    <div style={{padding:'0 10px'}}>
       <YouTube videoId={videoId} opts={opts} onEnd={onEnd} />
       <p style={titleStyle}>{truncateTitle(title)}</p>
       <p style={channelStyle}>{channel}</p>

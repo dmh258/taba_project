@@ -31,7 +31,7 @@ const Container = () => {
 
   return (
     <div>
-    <div style={{ padding: '0 390px' }}>
+    <div style={{ padding: '0 10%', minWidth:'1280px', }}>
       <Link to='/makeup/upload' style={linkStyle}>
         <div style={{margin: '80px 0'}}>
         <div style={{height: '200px', backgroundImage: `url('/image/main/mid-banner1.png')`,backgroundSize: 'cover',}}>
@@ -122,7 +122,7 @@ const Container = () => {
         </div>
     </div>
     <img src='/image/main/decoBar2.png' style={{ width: '100%',}}/>
-    <div style={{ padding: '0 390px' }}>
+    <div style={{ padding: '0 10%', minwidth:'1280px' }}>
         <div style={{margin: '80px 0',  display: 'flex', justifyContent: 'space-between'}}>
             <div style={{height: '280px', width: '540px', backgroundImage: `url('/image/main/mid-banner2.png')`,backgroundSize: 'cover',}}>
                 <div style={{display:'flex', flexDirection: 'column', padding: '80px 40px'}}>
@@ -146,8 +146,8 @@ const Container = () => {
             </div>
         </div>
         </div>
-        <div style={{ padding: '40px 390px', margin: '60px 0',backgroundColor: '#F574C9'}}>
-          <div>
+        <div style={{ padding: '40px 10%', minWidth:'1280px', margin: '60px 0',backgroundColor: '#F574C9'}}>
+          <div >
             <div style={{display:'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <p style={titleStyle}>스타일링 추천 팁</p>
             </div>

@@ -4,22 +4,30 @@ const Footer = () => {
   const footerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    margin: '160px 0px 0px 0px',
-    padding: '0px',
+    margin: '160px 0px',
+    padding: '0',
     textAlign: 'center',
-    position: 'relative',
-    borderTop: '1px solid #dbdbdb',
+    justifyContent: 'center',
+    // position: 'relative',
     fontSize: '13px',
   };
 
-  const ContainerStyle = {
-    padding: '0px 300px',
+  const ContainerStyle1 = {
+    padding: '0px 10%',
     margin: '0px',
+    minWidth: '1280px',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '10px 304px 0px',
+    justifyContent: 'right',
+  };
+
+  const ContainerStyle2 = {
+    padding: '0px 10%',
+    margin: '0px',
+    minWidth: '1280px',
+    display: 'flex',
+    alignItems: 'center',
+    // justifyContent: 'space-between',
   };
 
   const topContainerStyle = {
@@ -27,15 +35,17 @@ const Footer = () => {
   };
 
   const leftContainerStyle = {
-    flex: 1,
+    // flex: 1,
+    width:'50%',
     textAlign: 'left',
   };
 
   const rightContainerStyle = {
-    flex: 1,
+    // flex: 1,
+    width:'50%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     textAlign: 'right',
     height: '100%', 
   };
@@ -46,6 +56,8 @@ const Footer = () => {
     textDecoration: 'none',
     lineHeight: '13px',
     fontSize: '13px',
+    flexWrap: 'nowrap',
+    letterSpacing: '0.5%',
   };
 
   const paragraphStyle = {
@@ -59,7 +71,8 @@ const Footer = () => {
 
   return (
     <footer className="footer" style={footerStyle}>
-        <div className="top-container" style={ContainerStyle}>
+      <div style={{borderTop: '1px solid #dbdbdb',borderBottom: '1px solid #dbdbdb', padding:'2px 0', width:'100%'}}>
+        <div className="top-container" style={ContainerStyle1}>
             <div className="top-left" style={topContainerStyle}>
                 <a href="#" style={linkStyle}>개인정보처리방침</a>
                 <a href="#" style={linkStyle}>이용약관</a>
@@ -70,8 +83,9 @@ const Footer = () => {
                 <a href="#" style={linkStyle}>TABA 2기</a>
             </div>
         </div>
+      </div>
       
-        <div className="bottom-container" style={ContainerStyle}> 
+        <div className="bottom-container" style={ContainerStyle2}> 
               <div className="left-container" style={leftContainerStyle}>
                   <h3 style={paragraphStyle}>(주)내일해5조</h3>
                   <p style={paragraphStyle}>프로젝트명:내일해5조 컬러놀이 퍼스널컬러진단 서비스</p>

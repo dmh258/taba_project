@@ -49,7 +49,7 @@ const NavigationBar = () => {
     fontFamily: 'Noto Sans KR, sans-serif',
     // position: 'relative',
     height: '90px',
-    minWidth: '1220px',
+    minWidth: '1280px',
     overflow: 'hidden',
   };
 
@@ -78,12 +78,12 @@ const NavigationBar = () => {
   const inputStyle = {
     width: '180px',
     height: '44px',
-    fontSize: '16px',
+    fontSize: '14px',
     padding: '0 20px',
     border: 'none',
     borderRadius: '50px 0 0 50px',
     backgroundColor: '#E9E9E9',
-    '::placeholder': {color: '#dbdbdb',},
+    '::placeholder': {fontSize:'12px', color: '#dbdbdb',},
   };
 
   return (

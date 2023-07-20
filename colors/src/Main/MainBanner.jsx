@@ -14,9 +14,22 @@ const MainBanner =()=> {
 
     //style
 
+    const imgStyle={
+        margin:'0',
+        width:'50%',
+        overFlow:'hidden',
+        overFit:'cover',
+    };
+
+    const textStlye={
+        width:'50%',
+        display:'flex', 
+        flexDirection: 'column', 
+        margin:'0',
+    };
+
     const titleStyle={
         fontSize: '32px',
-        width: '410px',
         flexWrap: 'wrap',
     };
 
@@ -34,12 +47,12 @@ const MainBanner =()=> {
     return (
         <div>
             <div style={{height: '600px', width: '100%', backgroundColor: '#F5C359', }}>
-                <div style={{display:'flex', justifyContent: 'space-between', padding: '120px 390px'}}>
+                <div style={{display:'flex', justifyContent: 'center', padding: '120px 10%', minSidth:'1280px'}}>
                 {hasPersonalColor() ? (
                 // 퍼스널 컬러 정보가 있을 때의 배너
                 <>
-                <div style={{margin:'0 10px 0 0', overFlow:'hidden', overFit:'cover'}}><img src='/image/main/top-banner1.png' /> </div>
-                    <div style={{display:'flex', flexDirection: 'column', margin:'0 0 0 10px'}}>
+                <div style={imgStyle}><img src='/image/main/top-banner1.png' /> </div>
+                    <div style={textStlye}>
                     <p style={titleStyle}>퍼스널컬러 알아보고 내 취향 찾자!</p>
                     <p style={subtitleStyle}>컬러놀이에서 퍼스널컬러를 진단하고, 어울리는 상품 추천받기</p>
                     <Link to='/'>
@@ -52,8 +65,8 @@ const MainBanner =()=> {
                  ) : (
                 // 퍼스널 컬러 정보가 없을 때의 배너
                 <>
-                <div style={{margin:'0 10px 0 0', overFlow:'hidden', overFit:'cover'}}><img src='/image/main/top-banner1.png' /> </div>
-                <div style={{display:'flex', flexDirection: 'column', margin:'0 0 0 10px'}}>
+                <div style={imgStyle}><img src='/image/main/top-banner1.png' /> </div>
+                <div style={textStlye}>
                 <p style={titleStyle}>퍼스널컬러를 진단받으셨나요? 이제 어울리는 제품을 찾아봐요!</p>
                 <p style={subtitleStyle}>컬러놀이에서 추천하는 제품 보러가기</p>
                 <Link to='/product/recommend'>
