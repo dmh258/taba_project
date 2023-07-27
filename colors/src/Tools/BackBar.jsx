@@ -6,9 +6,17 @@ const BackBar = ({ pageName, onBackClick }) => {
     const backbarStyle = {
         borderTop: '1px solid #dbdbdb', 
         borderBottom: '1px solid #dbdbdb', 
-        padding:'5px 0px', 
-        width:'100%', 
-        justifyContent: 'center',
+        flexWrap: 'nowrap',
+        alignItems: 'center',
+        justifyContent: 'left',
+        padding: '5px 10%',
+        margin: '0px',
+        fontFamily: 'Noto Sans KR, sans-serif',
+        height: '35px',
+        maxWidth: '100%',
+        minWidth: '1280px',
+        overflow: 'hidden',
+        display: 'flex',
     };
 
     const backButtonStyle = {
@@ -27,7 +35,7 @@ const BackBar = ({ pageName, onBackClick }) => {
 
   return (
         <div style={backbarStyle}>
-            <div style={{padding: '0px 10%', width:'1280px', display:'flex', alignItems: 'center', justifyContent: 'left'}}>
+            <div style={{display:'flex', alignItems: 'center',}}>
                 <Link to="/main"><img src="/image/back/back.svg" alt="Back" style={backButtonStyle}/></Link>
                 <div> <span style={pageNameStyle}>{pageName}</span> </div>
             </div>

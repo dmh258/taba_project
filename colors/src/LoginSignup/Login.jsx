@@ -140,11 +140,13 @@ const Login = () => {
   const formStyle = {
     display: 'flex',
     flexDirection: 'column',
-    margin: '30px auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth:'1280px',
   };
 
   const inputStyle = {
-    width: '100%',
+    width: '508px',
     margin: '10px 0px 5px',
     padding: '10px',
     fontSize: '16px',
@@ -155,15 +157,15 @@ const Login = () => {
     letterSpacing: '1%',
   };
 
-  const linkStyle = {
+  const formStyle2 = {
+    width:'508px',
     padding: '5px 0px 0px',
     display: 'flex',
     justifyContent: 'space-between',
-    color: '#272727',
-    textDecoration: 'none',
   };
 
   const submitStyle = {
+    width:'508px',
     cursor: 'pointer',
     fontSize: '16px',
     backgroundColor: '#F5C359',
@@ -187,17 +189,21 @@ const Login = () => {
               {/* 기타 로그인 상태 유지 관련 기능 */}
             </div>
         ) : (
-            <form method="post" action="http://localhost:8080/user_data/check" id="login-form" onSubmit={handleSubmit} style={formStyle}>
-              <input type="text" name="userEmail" placeholder="example@gmail.com" style={inputStyle} value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
-              <input type="password" name="userPassword" placeholder="비밀번호 입력" style={inputStyle} value={userPassword} onChange={(e) => setUserPassword(e.target.value)} />
-              {ErrorMessage && <p style={errorStyle}>{ErrorMessage}</p>}
-              <div style={linkStyle}>
-                <label htmlFor="remember-check">
-                  <input type="checkbox" id="remember-check" /> 로그인 상태 유지
-                </label>
-                <a href="#" style={linkStyle}>아이디/비밀번호 찾기</a>
+            <form method="post" action="http://localhost:8080/user_data/check" id="login-form" onSubmit={handleSubmit} >
+              <div style={formStyle}>
+                <input type="text" name="userEmail" placeholder="example@gmail.com" style={inputStyle} value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
+                <input type="password" name="userPassword" placeholder="비밀번호 입력" style={inputStyle} value={userPassword} onChange={(e) => setUserPassword(e.target.value)} />
+                {ErrorMessage && <p style={errorStyle}>{ErrorMessage}</p>}
+                
+                <div style={formStyle2}>
+                  <label htmlFor="remember-check">
+                    <input type="checkbox" id="remember-check" /> 로그인 상태 유지
+                  </label>
+                  <a href="#" style={{textDecoration: 'none',color: '#272727',}}>아이디/비밀번호 찾기</a>
+                </div>
+                <input type="submit" value="로그인" style={submitStyle} />
+                
               </div>
-              <input type="submit" value="로그인" style={submitStyle} />
             </form>
         )}
       </div>

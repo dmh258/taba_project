@@ -246,24 +246,29 @@ const handleGenderChange = (e) => {
   const formStyle = {
     display: 'flex',
     flexDirection: 'column',
-    padding: '30px,'
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth:'1280px',
   };
 
   const paragraphStyle = {
     display: 'flex',
+    width:'508px',
+    justifyContent: 'space-between',
     margin: '30px 0px 5px',
     fontSize: '18px',
     color: '#272727',
   };
-  const paragraphStyle2 = {
+
+  const conditionStyle = {
     display: 'flex',
-    margin: '30px 0px 5px',
     fontSize: '15px',
     color: '#666666',
+    margin:'0',
   };
 
   const inputStyle = {
-    width: '100%',
+    width: '508px',
     margin: '5px 0px 5px',
     padding: '10px',
     fontSize: '16px',
@@ -274,24 +279,15 @@ const handleGenderChange = (e) => {
   };
 
   const refreshStyle = {
+    width:'28px',
     cursor: 'pointer',
     padding: '0px 5px 0px',
     display: 'flex',
-    margin: '30px 0px 5px',
+    margin: '0',
   };
 
-  const submitStyle = {
-    cursor: 'pointer',
-    fontSize: '16px',
-    backgroundColor: '#F5C359',
-    marginTop: '60px',
-    padding: '13px',
-    borderRadius: '50px',
-  };
- 
-  const inputcenterStyle = {
-    width: '100%',
-    margin: '5px 10px 2px',
+  const selectStyle = {
+    width: '165px',
     padding: '10px',
     fontSize: '16px',
     height: '48px',
@@ -300,7 +296,16 @@ const handleGenderChange = (e) => {
     borderRadius: '5px',
   };
 
-
+  const submitStyle = {
+    width:'508px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    backgroundColor: '#F5C359',
+    marginTop: '60px',
+    padding: '13px',
+    borderRadius: '50px',
+  };
+ 
   const messageStyle = {
     color: "#D01C59",
     fontSize: "15px",
@@ -311,13 +316,15 @@ const handleGenderChange = (e) => {
     color: "#4EB983",
     fontSize: "15px",
     fontWeight: "bold",
-    padding: '0px 5px 0px', margin: '30px 0px 5px',
+    padding: '0px 5px 0px',
+    margin:'0',
   };
 
   const invalidStyle = {
     color: "#D01C59",
     fontSize: "15px",
-    padding: '0px 5px 0px', margin: '30px 0px 5px',
+    padding: '0px 5px 0px',
+    margin:'0',
   };
 
   const errorStyle = {
@@ -338,13 +345,13 @@ const handleGenderChange = (e) => {
       <p className="message" style={messageStyle}> {emailMessage} </p>
       {/* 비밀번호 */}
       <div>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <p style={paragraphStyle}>비밀번호</p>
+        <div style={paragraphStyle}>
+          <p style={{display:'flex', alignItems: 'center', margin:'0',}}>비밀번호</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <p style={isNumberValid ? validStyle : invalidStyle}>숫자</p><p style={paragraphStyle2}>|</p>
-            <p style={isLetterValid ? validStyle : invalidStyle}>영문자</p><p style={paragraphStyle2}>|</p>
-            <p style={isSpecialCharValid ? validStyle : invalidStyle}>특수문자</p><p style={paragraphStyle2}>|</p>
-            <p style={isLengthValid ? validStyle : invalidStyle}>4자리 이상 10자리 이하</p><p style={paragraphStyle2}>|</p>
+            <p style={isNumberValid ? validStyle : invalidStyle}>숫자</p><p style={conditionStyle}>|</p>
+            <p style={isLetterValid ? validStyle : invalidStyle}>영문자</p><p style={conditionStyle}>|</p>
+            <p style={isSpecialCharValid ? validStyle : invalidStyle}>특수문자</p><p style={conditionStyle}>|</p>
+            <p style={isLengthValid ? validStyle : invalidStyle}>4자리 이상 10자리 이하</p><p style={conditionStyle}>|</p>
           </div>
         </div>
         <input type="text" value={userPassword} onChange={onChangePassword} name="userPassword" placeholder="비밀번호 입력" style={inputStyle} />
@@ -361,28 +368,31 @@ const handleGenderChange = (e) => {
       <p className="message" style={messageStyle}>{phoneMessage}</p>
       {/* 닉네임 */}
       <div>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <p style={paragraphStyle}>닉네임</p>
+        <div style={paragraphStyle}>
+          <p style={{display:'flex', alignItems: 'center', margin:'0',}}>닉네임</p>
           <img src="/image/login/refresh.svg" alt="새로고침" onClick={handleRefresh} style={refreshStyle}/>
         </div>
         <input type="text" value={nickname} onChange={onChangeName} name="userName" placeholder="taba5조" style={inputStyle} />
       </div>
       <p className="message" style={messageStyle}>{nameMessage}</p>
       {/* 생년월일 */}
-      <p style={paragraphStyle}>생년월일</p>
-      <div style={{ display: 'flex' }}>
-        <select value={user_year} name="useryear" onChange={handleUserYearChange} style={inputStyle}>
-          <option value="년" disabled>년</option>
-          {isUserYear && renderOptions(1940, 2022, '년')}
-        </select>
-        <select value={user_month} name="usermonth" onChange={handleUserMonthChange} style={inputcenterStyle}>
-          <option value="월" disabled>월</option>
-          {isUserMonth && renderOptions(1, 12, '월')}
-        </select>
-        <select value={user_day} name="userday" onChange={handleUserDayChange} style={inputStyle}>
-          <option value="일" disabled>일</option>
-          {isUserDay && renderOptions(1, 31, '일')}
-        </select>
+      
+      <div>
+        <p style={paragraphStyle}>생년월일</p>
+        <div style={{widtj:'508px', display:'flex', justifyContent: 'space-between',}}>
+          <select value={user_year} name="useryear" onChange={handleUserYearChange} style={selectStyle}>
+            <option value="년" disabled>년</option>
+            {isUserYear && renderOptions(1940, 2022, '년')}
+          </select>
+          <select value={user_month} name="usermonth" onChange={handleUserMonthChange} style={selectStyle}>
+            <option value="월" disabled>월</option>
+            {isUserMonth && renderOptions(1, 12, '월')}
+          </select>
+          <select value={user_day} name="userday" onChange={handleUserDayChange} style={selectStyle}>
+            <option value="일" disabled>일</option>
+            {isUserDay && renderOptions(1, 31, '일')}
+          </select>
+        </div>
       </div>
       {/* 성별 */}
       <div>

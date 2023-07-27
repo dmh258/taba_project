@@ -8,12 +8,12 @@ const Tab = ({ activeTab, setActiveTab, tabContent }) => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center', // 가운데 정렬
-    
   };
 
   const buttonStyle = {
+    width:'256px',
     margin: '60px 0px 20px',
-    padding: '0px 80px 20px',
+    padding: '0px 0px 15px',
     border: 'none',
     backgroundColor: '#ffffff',
     cursor: 'pointer',
@@ -37,7 +37,7 @@ const Tab = ({ activeTab, setActiveTab, tabContent }) => {
   };
 
   return (
-    <div>
+    <div style={{}}>
       <div style={formStyle}>
         <button
           style={activeTab === 'login' ? activeButtonStyle : inactiveButtonStyle}
@@ -72,8 +72,8 @@ const LoginSignup = () => {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '507px', justifyContent: 'center'}}>
+    <div style={{ display: 'flex', justifyContent: 'center', minHeight: '100vh'}}>
+      <div style={{ width: '1280px', justifyContent: 'center'}}>
         {/* <h1>탭으로 전환하기</h1> */}
         <Tab activeTab={activeTab} setActiveTab={setActiveTab} tabContent={tabContent} />
       </div>

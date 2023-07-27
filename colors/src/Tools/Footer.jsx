@@ -27,7 +27,7 @@ const Footer = () => {
     minWidth: '1280px',
     display: 'flex',
     alignItems: 'center',
-    // justifyContent: 'space-between',
+    justifyContent: 'space-between',
   };
 
   const topContainerStyle = {
@@ -36,13 +36,13 @@ const Footer = () => {
 
   const leftContainerStyle = {
     // flex: 1,
-    width:'50%',
+    // width:'50%',
     textAlign: 'left',
   };
 
   const rightContainerStyle = {
     // flex: 1,
-    width:'50%',
+    // width:'50%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -56,7 +56,6 @@ const Footer = () => {
     textDecoration: 'none',
     lineHeight: '13px',
     fontSize: '13px',
-    flexWrap: 'nowrap',
     letterSpacing: '0.5%',
   };
 
