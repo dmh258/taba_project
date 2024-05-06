@@ -3,6 +3,7 @@
 2023.05 ~ 2023.06 TABA(Tmax AI Bigdata Academy) 프로그램 내부 프로젝트
 
 사용 언어
+
 자바, 파이썬
 
 역할
